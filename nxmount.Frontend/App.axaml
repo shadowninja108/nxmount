@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:frontend="clr-namespace:nxmount.Frontend"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             x:Class="nxmount.Frontend.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+	<Application.DataTemplates>
+        <frontend:ViewLocator/>
+	</Application.DataTemplates>
+    <Application.Styles>
+        <FluentTheme />
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+        <StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml"/>
+		<avalonia:MaterialIconStyles/>
+    </Application.Styles>
+</Application>

@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:nxmount.Frontend.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="nxmount.Frontend.Views.MountedView"
+             x:DataType="viewModels:MountedViewModel">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Label Content="{CompiledBinding MountMessage}" HorizontalContentAlignment="Center"/>
+        <Button Click="OnUnmountClicked">Unmount</Button>
+    </StackPanel>
+</UserControl>

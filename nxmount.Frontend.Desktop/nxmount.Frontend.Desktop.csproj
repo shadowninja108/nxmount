@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<IsWindows Condition="$(RuntimeIdentifier) == 'win-x64'">true</IsWindows>
+		<IsMacOs Condition="$([MSBuild]::IsOsPlatform('OSX'))">true</IsMacOs>
+		<IsLinux Condition="$(RuntimeIdentifier) == 'linux-x64'">true</IsLinux>
+	</PropertyGroup>
+
+	<PropertyGroup>
+	    <OutputType>Exe</OutputType>
+		<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+		<TargetFramework Condition="$(IsWindows) == true">net8.0-windows10.0.22621.0</TargetFramework>
+		<TargetFramework Condition="$(IsLinux) == true">net8.0</TargetFramework>
+	    <Nullable>enable</Nullable>
+	    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+	    <ApplicationManifest>app.manifest</ApplicationManifest>
+	    <Configurations>Debug;Release</Configurations>
+	 </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\nxmount.Frontend\nxmount.Frontend.csproj" />
+  </ItemGroup>
+</Project>

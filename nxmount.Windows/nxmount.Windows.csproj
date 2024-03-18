@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DokanNet" Version="2.1.0" />
+    <PackageReference Include="winfsp.net" Version="2.1.24051" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibHac\src\LibHac\LibHac.csproj" />
+    <ProjectReference Include="..\nxmount\nxmount.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:nxmount.Frontend.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:nxmount.Frontend.Views"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+        x:Class="nxmount.Frontend.Views.MainWindow"
+        Width="500"
+        Height="450"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="nxmount.Frontend"
+        x:DataType="vm:MainWindowViewModel"
+        Content="{CompiledBinding ContentViewModel}">
+</Window>

@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34407.89
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nxmount", "nxmount.csproj", "{B8B86E20-A90C-47AA-B584-29C126B35DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nxmount", "nxmount\nxmount.csproj", "{B8B86E20-A90C-47AA-B584-29C126B35DA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibHac", "LibHac\src\LibHac\LibHac.csproj", "{FE9B8EBC-3170-40ED-830E-CD8B36A6DC79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nxmount.Frontend", "nxmount.Frontend\nxmount.Frontend.csproj", "{DAC8C865-2B6F-4244-9F80-A4A29C08F366}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nxmount.Frontend.Desktop", "nxmount.Frontend.Desktop\nxmount.Frontend.Desktop.csproj", "{0212B20B-9FEE-45D4-8559-61E3F87D2159}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nxmount.Windows", "nxmount.Windows\nxmount.Windows.csproj", "{27FF9B5B-DA85-4A6C-A42B-5FBADBE5FDC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nxmount.Linux", "nxmount.Linux\nxmount.Linux.csproj", "{053200FB-4C84-4343-939D-038021D1E365}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,26 @@ Global
 		{B8B86E20-A90C-47AA-B584-29C126B35DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8B86E20-A90C-47AA-B584-29C126B35DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8B86E20-A90C-47AA-B584-29C126B35DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9B8EBC-3170-40ED-830E-CD8B36A6DC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9B8EBC-3170-40ED-830E-CD8B36A6DC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9B8EBC-3170-40ED-830E-CD8B36A6DC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9B8EBC-3170-40ED-830E-CD8B36A6DC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAC8C865-2B6F-4244-9F80-A4A29C08F366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC8C865-2B6F-4244-9F80-A4A29C08F366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC8C865-2B6F-4244-9F80-A4A29C08F366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC8C865-2B6F-4244-9F80-A4A29C08F366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0212B20B-9FEE-45D4-8559-61E3F87D2159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0212B20B-9FEE-45D4-8559-61E3F87D2159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0212B20B-9FEE-45D4-8559-61E3F87D2159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0212B20B-9FEE-45D4-8559-61E3F87D2159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27FF9B5B-DA85-4A6C-A42B-5FBADBE5FDC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FF9B5B-DA85-4A6C-A42B-5FBADBE5FDC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FF9B5B-DA85-4A6C-A42B-5FBADBE5FDC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FF9B5B-DA85-4A6C-A42B-5FBADBE5FDC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053200FB-4C84-4343-939D-038021D1E365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053200FB-4C84-4343-939D-038021D1E365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053200FB-4C84-4343-939D-038021D1E365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053200FB-4C84-4343-939D-038021D1E365}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

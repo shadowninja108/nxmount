@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<IsWindows Condition="$(RuntimeIdentifier) == 'win-x64'">true</IsWindows>
+		<IsMacOs Condition="$([MSBuild]::IsOsPlatform('OSX'))">true</IsMacOs>
+		<IsLinux Condition="$(RuntimeIdentifier) == 'linux-x64'">true</IsLinux>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+		<TargetFramework Condition="$(IsWindows) == true">net8.0-windows10.0.22621.0</TargetFramework>
+		<TargetFramework Condition="$(IsLinux) == true">net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<Configurations>Debug;Release</Configurations>
+	</PropertyGroup>
+
+	<ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Skia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Include="Avalonia.Diagnostics" Condition="'$(Configuration)'=='Debug'">
+      <Version>11.0.10</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.6" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="2.1.0" />
+    <PackageReference Include="ReactiveValidation.Avalonia" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\nxmount\nxmount.csproj" />
+	  <ProjectReference Include="..\nxmount.Windows\nxmount.Windows.csproj" />
+  </ItemGroup>
+
+	<ItemGroup Condition="$(IsWindows) == true">
+		<ProjectReference Include="..\nxmount.Windows\nxmount.Windows.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="$(IsLinux) == true">
+		<ProjectReference Include="..\nxmount.Linux\nxmount.Linux.csproj" />
+	</ItemGroup>
+</Project>

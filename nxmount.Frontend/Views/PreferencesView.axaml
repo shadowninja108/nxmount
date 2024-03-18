@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:util="clr-namespace:nxmount.Util;assembly=nxmount"
+             xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+             xmlns:viewModels="clr-namespace:nxmount.Frontend.ViewModels"
+             xmlns:util1="clr-namespace:nxmount.Frontend.Util"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="nxmount.Frontend.Views.PreferencesView"
+             x:DataType="viewModels:PreferencesViewModel">
+    <UserControl.Resources>
+        <generic:List x:TypeArguments="util:ApplicationLanguage" x:Key="Languages">
+            <util:ApplicationLanguage>AmericanEnglish</util:ApplicationLanguage>
+            <util:ApplicationLanguage>BritishEnglish</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Japanese</util:ApplicationLanguage>
+            <util:ApplicationLanguage>French</util:ApplicationLanguage>
+            <util:ApplicationLanguage>German</util:ApplicationLanguage>
+            <util:ApplicationLanguage>LatinAmericanSpanish</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Spanish</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Italian</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Dutch</util:ApplicationLanguage>
+            <util:ApplicationLanguage>CanadianFrench</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Portuguese</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Russian</util:ApplicationLanguage>
+            <util:ApplicationLanguage>Korean</util:ApplicationLanguage>
+            <util:ApplicationLanguage>TraditionalChinese</util:ApplicationLanguage>
+            <util:ApplicationLanguage>SimplifiedChinese</util:ApplicationLanguage>
+		</generic:List>
+        <util1:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <StackPanel HorizontalAlignment="Stretch">
+            <Button Command="{CompiledBinding Parent.TransitConfig}">Back</Button>
+        </StackPanel>
+        <DockPanel HorizontalAlignment="Center">
+            <Label DockPanel.Dock="Left">Preferred language:</Label>
+			<ComboBox VerticalAlignment="Center" ItemsSource="{StaticResource Languages}" SelectedValue="{CompiledBinding Parent.Config.PreferredLanguage}">
+                <!-- Convert enum to it's description string and back. -->
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="util:ApplicationLanguage">
+                        <Label Content="{CompiledBinding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+			</ComboBox>
+        </DockPanel>
+	</StackPanel>
+</UserControl>

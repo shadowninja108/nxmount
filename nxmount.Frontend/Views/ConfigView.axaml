@@ -1,0 +1,160 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:nxmount.Frontend.ViewModels"
+             xmlns:models="using:nxmount.Frontend.Model"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+             xmlns:controls="clr-namespace:nxmount.Frontend.Controls"
+             xmlns:util="clr-namespace:nxmount.Frontend.Util"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             x:Class="nxmount.Frontend.Views.ConfigView"
+                 x:DataType="vm:ConfigViewModel">
+        <UserControl.Resources>
+		    <generic:List x:TypeArguments="models:SourceType" x:Key="SourceTypes">
+			    <models:SourceType>Nsp</models:SourceType>
+			    <models:SourceType>Xci</models:SourceType>
+                <models:SourceType>NspOrXci</models:SourceType>
+                <models:SourceType>NcaFolder</models:SourceType>
+			    <models:SourceType>Sd</models:SourceType>
+            </generic:List>
+
+            <util:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+	    </UserControl.Resources>
+	
+        <UserControl.Styles>
+			<!-- Override the validation template to not show the text under the TextBox. -->
+            <Style Selector="DataValidationErrors">
+                <Setter Property="ErrorTemplate">
+                    <DataTemplate x:DataType="{x:Type x:Object}">
+                        <Canvas Width="14" Height="14" Margin="4 0 4 0" Background="Transparent">
+
+                            <!-- Tooltip. -->
+                            <Canvas.Styles>
+                                <Style Selector="ToolTip">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource SystemControlErrorTextForegroundBrush}"/>
+                                </Style>
+                            </Canvas.Styles>
+                            <ToolTip.Tip>
+                                <ItemsControl ItemsSource="{Binding}"/>
+                            </ToolTip.Tip>
+
+                            <!-- Icon -->
+                            <Path Data="M14,7 A7,7 0 0,0 0,7 M0,7 A7,7 0 1,0 14,7 M7,3l0,5 M7,9l0,2" 
+                                  Stroke="{DynamicResource SystemControlErrorTextForegroundBrush}" 
+                                  StrokeThickness="2"/>
+                        </Canvas>
+                    </DataTemplate>
+                </Setter>
+
+                <!-- Wrapper for the content for the validation error template. -->
+                <Setter Property="Template">
+                   <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <!-- Error template, if there are errors. -->
+                            <ContentControl DockPanel.Dock="Right"
+                                            ContentTemplate="{TemplateBinding ErrorTemplate}"
+                                            DataContext="{TemplateBinding Owner}"
+                                            Content="{Binding (DataValidationErrors.Errors)}"
+                                            IsVisible="{Binding (DataValidationErrors.HasErrors)}"/>
+                            <!-- Inner content. -->
+                            <ContentPresenter
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Content="{TemplateBinding Content}"
+                                Padding="{TemplateBinding Padding}"
+                            />
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter>
+            </Style>
+        </UserControl.Styles>
+    <DockPanel>
+		<DockPanel DockPanel.Dock="Top">
+			<Button DockPanel.Dock="Right" VerticalAlignment="Center" Command="{CompiledBinding Parent.TransitPreferences}">
+                <avalonia:MaterialIcon  Kind="Settings"/>
+			</Button>
+			<Menu>
+				<MenuItem Header="File">
+					<MenuItem Header="Load Config..." Click="OnLoadConfigClicked"/>
+					<MenuItem Header="Save Config..." Click="OnSaveConfigClicked"/>
+				</MenuItem>
+			</Menu>
+		</DockPanel>
+        <DockPanel HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
+            <Button DockPanel.Dock="Right" x:CompileBindings="False" Command="{CompiledBinding Parent.TransitMounting}">Start</Button>
+            <Button Click="OnAddSourceClicked">Add</Button>
+        </DockPanel>
+        <DataGrid
+            GridLinesVisibility="All" 
+            ItemsSource="{CompiledBinding Parent.Config.Items}"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+        >
+            <DataGrid.Styles>
+                <Style Selector="DataGridCell.error">
+                    <Setter 
+                        x:DataType="models:ConfigItem"
+                        Property="BorderBrush"
+                        Value="{CompiledBinding HasErrors, Converter={x:Static util:ErrorBorderConverter.Converter}, Mode=OneWay}"
+                    />
+                </Style>
+            </DataGrid.Styles>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn
+                    Header="Folder of"
+                >
+                    <DataTemplate DataType="models:ConfigItem">
+                        <CheckBox
+                            HorizontalAlignment="Center"
+                            IsVisible="{CompiledBinding ShowFolderOfOption}"
+                            IsChecked="{CompiledBinding FolderOf}"
+                        />
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Header="Type"
+                >
+                    <DataTemplate DataType="models:ConfigItem">
+                        <ComboBox 
+                            HorizontalAlignment="Stretch"
+                            ItemsSource="{StaticResource SourceTypes}"
+                            SelectedValue="{CompiledBinding Source}"
+                        >
+                            <!-- Convert enum to it's description string and back. -->
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:SourceType">
+                                    <Label Content="{CompiledBinding Converter={StaticResource EnumDescriptionConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*" Header="Path" CanUserSort="False">
+                    <DataTemplate DataType="models:ConfigItem">
+                        <TextBox>
+                            <TextBox.Text>
+                                <Binding Path="Path" >
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="30">
+                    <DataTemplate>
+                        <Button Click="OnBrowseForSourceClicked">...</Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataTemplate DataType="models:ConfigItem">
+                        <Button Click="OnRemoveSourceClicked" HorizontalAlignment="Stretch">Remove</Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+			</DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</UserControl>
