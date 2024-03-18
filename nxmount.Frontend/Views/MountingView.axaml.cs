@@ -9,7 +9,7 @@ using nxmount.Apps;
 using nxmount.Apps.Sources;
 using nxmount.Frontend.Model;
 using nxmount.Frontend.ViewModels;
-using nxmount.Windows;
+using nxmount.Linux;
 using nxmount.Util;
 namespace nxmount.Frontend.Views
 {
