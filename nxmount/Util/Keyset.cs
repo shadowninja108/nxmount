@@ -33,7 +33,7 @@ namespace nxmount.Util
 
             if (!prodFi.Exists)
             {
-                Console.WriteLine($"Expects keyset at {ProdKeysPathInWorkingDirectory.FullName} {ProdKeysPathInUserProfile.FullName}");
+                Console.WriteLine($"Expects keyset at {ProdKeysPathInWorkingDirectory.FullName} or {ProdKeysPathInUserProfile.FullName}");
                 Environment.Exit(0);
             }
 
@@ -43,7 +43,7 @@ namespace nxmount.Util
 
             if (!titleFi.Exists)
             {
-                Console.WriteLine($"Expects keyset at {TitleKeysPathInWorkingDirectory.FullName} {TitleKeysPathInUserProfile.FullName}");
+                Console.WriteLine($"Expects keyset at {TitleKeysPathInWorkingDirectory.FullName} or {TitleKeysPathInUserProfile.FullName}");
                 Environment.Exit(0);
             }
 
