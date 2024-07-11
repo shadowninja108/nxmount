@@ -83,7 +83,7 @@ namespace nxmount.Driver.Handlers
                     if (missingBase || Info.IsSectionMissingBase(key, sections[0]))
                         return new DummyFileNode()
                         {
-                            FileName = name,
+                            FileName = name + MissingBase,
                             Parent = this,
                         };
 
