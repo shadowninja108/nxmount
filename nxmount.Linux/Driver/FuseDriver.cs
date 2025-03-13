@@ -1,5 +1,6 @@
 ﻿using FuseDotNet;
 using FuseDotNet.Extensions;
+using LTRData.Extensions.Native.Memory;
 using nxmount.Apps;
 using nxmount.Driver;
 using nxmount.Driver.Interfaces;
@@ -121,14 +122,14 @@ namespace nxmount.Linux.Driver
         {
         }
 
-        public string GetPath(ReadOnlyFuseMemory<byte> fileNamePtr) => FuseHelper.GetStringFromSpan(fileNamePtr.Span);
+        public string GetPath(ReadOnlyNativeMemory<byte> fileNamePtr) => FuseHelper.GetString(fileNamePtr.Span);
 
         public void Dispose()
         {
             // TODO release managed resources here
         }
 
-        public PosixResult OpenDir(ReadOnlyFuseMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
+        public PosixResult OpenDir(ReadOnlyNativeMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
         {
             Console.WriteLine("OpenDir");
 
@@ -147,7 +148,7 @@ namespace nxmount.Linux.Driver
             return PosixResult.Success;
         }
 
-        public PosixResult GetAttr(ReadOnlyFuseMemory<byte> fileNamePtr, out FuseFileStat stat, ref FuseFileInfo fileInfo)
+        public PosixResult GetAttr(ReadOnlyNativeMemory<byte> fileNamePtr, out FuseFileStat stat, ref FuseFileInfo fileInfo)
         {
             stat = default;
             try
@@ -195,7 +196,7 @@ namespace nxmount.Linux.Driver
             }
         }
 
-        public PosixResult Read(ReadOnlyFuseMemory<byte> fileNamePtr, FuseMemory<byte> buffer, long position, out int readLength,
+        public PosixResult Read(ReadOnlyNativeMemory<byte> fileNamePtr, NativeMemory<byte> buffer, long position, out int readLength,
             ref FuseFileInfo fileInfo)
         {
             Console.WriteLine($"Read {position}+{buffer.Length}");
@@ -222,7 +223,7 @@ namespace nxmount.Linux.Driver
             return ResultSuccess;
         }
 
-        public PosixResult ReadDir(ReadOnlyFuseMemory<byte> fileNamePtr, out IEnumerable<FuseDirEntry> entries, ref FuseFileInfo fileInfo, long offset,
+        public PosixResult ReadDir(ReadOnlyNativeMemory<byte> fileNamePtr, out IEnumerable<FuseDirEntry> entries, ref FuseFileInfo fileInfo, long offset,
             FuseReadDirFlags flags)
         {
             Console.WriteLine("ReadDir");
@@ -237,7 +238,7 @@ namespace nxmount.Linux.Driver
             return PosixResult.Success;
         }
 
-        public PosixResult Open(ReadOnlyFuseMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
+        public PosixResult Open(ReadOnlyNativeMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
         {
             Console.WriteLine("Open");
             var result = TryGetHandler(out _, GetPath(fileNamePtr), out var handler);
@@ -248,7 +249,7 @@ namespace nxmount.Linux.Driver
             return PosixResult.Success;
         }
 
-        public PosixResult Access(ReadOnlyFuseMemory<byte> fileNamePtr, PosixAccessMode mask)
+        public PosixResult Access(ReadOnlyNativeMemory<byte> fileNamePtr, PosixAccessMode mask)
         {
             Console.WriteLine("Access");
             var result = TryGetHandler(out _, GetPath(fileNamePtr), out var handler);
@@ -260,7 +261,7 @@ namespace nxmount.Linux.Driver
             return result;
         }
 
-        public PosixResult ReleaseDir(ReadOnlyFuseMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
+        public PosixResult ReleaseDir(ReadOnlyNativeMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
         {
             Console.WriteLine("ReleaseDir");
             /* TODO: */
@@ -268,7 +269,7 @@ namespace nxmount.Linux.Driver
             return PosixResult.Success;
         }
 
-        public PosixResult Release(ReadOnlyFuseMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
+        public PosixResult Release(ReadOnlyNativeMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo)
         {
             Console.WriteLine("Release");
             /* TODO: */
@@ -276,7 +277,7 @@ namespace nxmount.Linux.Driver
             return PosixResult.Success;
         }
 
-        public PosixResult StatFs(ReadOnlyFuseMemory<byte> fileNamePtr, out FuseVfsStat statvfs)
+        public PosixResult StatFs(ReadOnlyNativeMemory<byte> fileNamePtr, out FuseVfsStat statvfs)
         {
             Console.WriteLine("StatFs");
             statvfs = default;
@@ -286,39 +287,39 @@ namespace nxmount.Linux.Driver
 
         public void Init(ref FuseConnInfo fuse_conn_info) { }
 
-        public PosixResult Write(ReadOnlyFuseMemory<byte> fileNamePtr, ReadOnlyFuseMemory<byte> buffer, long position, out int writtenLength,
+        public PosixResult Write(ReadOnlyNativeMemory<byte> fileNamePtr, ReadOnlyNativeMemory<byte> buffer, long position, out int writtenLength,
             ref FuseFileInfo fileInfo)
         {
             writtenLength = 0;
             return PosixResult.EROFS;
         }
 
-        public PosixResult FSyncDir(ReadOnlyFuseMemory<byte> fileNamePtr, bool datasync, ref FuseFileInfo fileInfo) => ENOSYS;
+        public PosixResult FSyncDir(ReadOnlyNativeMemory<byte> fileNamePtr, bool datasync, ref FuseFileInfo fileInfo) => ENOSYS;
 
-        public PosixResult ReadLink(ReadOnlyFuseMemory<byte> fileNamePtr, FuseMemory<byte> target) => ENOSYS;
+        public PosixResult ReadLink(ReadOnlyNativeMemory<byte> fileNamePtr, NativeMemory<byte> target) => ENOSYS;
 
-        public PosixResult Link(ReadOnlyFuseMemory<byte> from, ReadOnlyFuseMemory<byte> to) => PosixResult.EROFS;
+        public PosixResult Link(ReadOnlyNativeMemory<byte> from, ReadOnlyNativeMemory<byte> to) => PosixResult.EROFS;
 
-        public PosixResult MkDir(ReadOnlyFuseMemory<byte> fileNamePtr, PosixFileMode mode) => PosixResult.EROFS;
+        public PosixResult MkDir(ReadOnlyNativeMemory<byte> fileNamePtr, PosixFileMode mode) => PosixResult.EROFS;
 
-        public PosixResult RmDir(ReadOnlyFuseMemory<byte> fileNamePtr) => PosixResult.EROFS;
+        public PosixResult RmDir(ReadOnlyNativeMemory<byte> fileNamePtr) => PosixResult.EROFS;
 
-        public PosixResult FSync(ReadOnlyFuseMemory<byte> fileNamePtr, bool datasync, ref FuseFileInfo fileInfo) => ENOSYS;
+        public PosixResult FSync(ReadOnlyNativeMemory<byte> fileNamePtr, bool datasync, ref FuseFileInfo fileInfo) => ENOSYS;
 
-        public PosixResult Unlink(ReadOnlyFuseMemory<byte> fileNamePtr) => PosixResult.EROFS;
+        public PosixResult Unlink(ReadOnlyNativeMemory<byte> fileNamePtr) => PosixResult.EROFS;
 
-        public PosixResult SymLink(ReadOnlyFuseMemory<byte> from, ReadOnlyFuseMemory<byte> to) => PosixResult.EROFS;
+        public PosixResult SymLink(ReadOnlyNativeMemory<byte> from, ReadOnlyNativeMemory<byte> to) => PosixResult.EROFS;
 
-        public PosixResult Flush(ReadOnlyFuseMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo) => ENOSYS;
+        public PosixResult Flush(ReadOnlyNativeMemory<byte> fileNamePtr, ref FuseFileInfo fileInfo) => ENOSYS;
 
-        public PosixResult Rename(ReadOnlyFuseMemory<byte> from, ReadOnlyFuseMemory<byte> to) => PosixResult.EROFS;
+        public PosixResult Rename(ReadOnlyNativeMemory<byte> from, ReadOnlyNativeMemory<byte> to) => PosixResult.EROFS;
 
-        public PosixResult Truncate(ReadOnlyFuseMemory<byte> fileNamePtr, long size) => PosixResult.EROFS;
+        public PosixResult Truncate(ReadOnlyNativeMemory<byte> fileNamePtr, long size) => PosixResult.EROFS;
 
-        public PosixResult UTime(ReadOnlyFuseMemory<byte> fileNamePtr, TimeSpec atime, TimeSpec mtime, ref FuseFileInfo fileInfo) => PosixResult.EROFS;
+        public PosixResult UTime(ReadOnlyNativeMemory<byte> fileNamePtr, TimeSpec atime, TimeSpec mtime, ref FuseFileInfo fileInfo) => PosixResult.EROFS;
 
-        public PosixResult Create(ReadOnlyFuseMemory<byte> fileNamePtr, PosixFileMode mode, ref FuseFileInfo fileInfo) => ENOSYS;
+        public PosixResult Create(ReadOnlyNativeMemory<byte> fileNamePtr, PosixFileMode mode, ref FuseFileInfo fileInfo) => ENOSYS;
 
-        public PosixResult IoCtl(ReadOnlyFuseMemory<byte> fileNamePtr, int cmd, IntPtr arg, ref FuseFileInfo fileInfo, FuseIoctlFlags flags, IntPtr data) => ENOSYS;
+        public PosixResult IoCtl(ReadOnlyNativeMemory<byte> fileNamePtr, int cmd, IntPtr arg, ref FuseFileInfo fileInfo, FuseIoctlFlags flags, IntPtr data) => ENOSYS;
     }
 }
